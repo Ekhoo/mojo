@@ -16,6 +16,7 @@ final class HomeViewModel: ObservableObject {
     
     @Published var templates: [Template]? = nil
     @Published var selectedTemplate: Template? = nil
+    var templateView: TemplateView? = nil
     
     init() {
         templateRepository.fetchTemplates { templates in
