@@ -73,12 +73,12 @@
 				BEF0289F28C860F200B8E713 /* TemplateView.swift */,
 				BEF028A128C8610200B8E713 /* TemplateScene.swift */,
 				BEF028A328C864F400B8E713 /* TemplateRepository.swift */,
-				BEF0288628C2451900B8E713 /* Assets.xcassets */,
-				BEF0288828C2451900B8E713 /* Preview Content */,
 				BE69AE0028C8AD910067BB1E /* Color+Additions.swift */,
 				BE69AE0228C8E8880067BB1E /* DetailsView.swift */,
 				BE69AE0428C8EBA10067BB1E /* View+Additions.swift */,
 				BE69AE0628C8F0AA0067BB1E /* LocalCache.swift */,
+				BEF0288628C2451900B8E713 /* Assets.xcassets */,
+				BEF0288828C2451900B8E713 /* Preview Content */,
 			);
 			path = Mojo;
 			sourceTree = "<group>";

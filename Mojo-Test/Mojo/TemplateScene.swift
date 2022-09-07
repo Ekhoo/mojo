@@ -20,7 +20,21 @@ class TemplateScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupMedia(template: Template, node: SKNode, parent: SKNode) {
+    func build(template: Template, parent: SKNode) {
+        let node = SKSpriteNode()
+        
+        setupSize(template: template, node: node, parent: parent)
+        setupAnchor(template: template, node: node)
+        setupPosition(template: template, node: node, parent: parent)
+        setupBackground(template: template, node: node)
+        setupMedia(template: template, node: node, parent: parent)
+        
+        parent.addChild(node)
+        
+        setupChildren(template: template, node: node, parent: parent)
+    }
+    
+    private func setupMedia(template: Template, node: SKNode, parent: SKNode) {
         guard let media = template["media"] as? String,
               let contentMode = template["media_content_mode"] as? String,
               let image = UIImage(named: media) else {
@@ -49,7 +63,7 @@ class TemplateScene: SKScene {
         node.addChild(sprite)
     }
     
-    func setupSize(template: Template, node: SKSpriteNode, parent: SKNode) {
+    private func setupSize(template: Template, node: SKSpriteNode, parent: SKNode) {
         var wFactor = 1.0
         var hFactor = 1.0
         
@@ -63,7 +77,7 @@ class TemplateScene: SKScene {
         node.size = CGSize(width: parent.frame.size.width * wFactor, height: parent.frame.size.height * hFactor)
     }
     
-    func setupAnchor(template: Template, node: SKSpriteNode) {
+    private func setupAnchor(template: Template, node: SKSpriteNode) {
         var xAnchor = "left"
         var yAnchor = "bottom"
         
@@ -93,7 +107,7 @@ class TemplateScene: SKScene {
         node.anchorPoint = CGPoint(x: xAnchorValue, y: yAnchorValue)
     }
     
-    func setupPosition(template: Template, node: SKSpriteNode, parent: SKNode) {
+    private func setupPosition(template: Template, node: SKSpriteNode, parent: SKNode) {
         var xFactor = 0.0
         var yFactor = 0.0
         
@@ -110,7 +124,7 @@ class TemplateScene: SKScene {
         node.position = CGPoint(x: x, y: y)
     }
     
-    func setupBackground(template: Template, node: SKSpriteNode) {
+    private func setupBackground(template: Template, node: SKSpriteNode) {
         var color = SKColor.black
         
         if let hexColor = template["background_color"] as? String {
@@ -120,7 +134,7 @@ class TemplateScene: SKScene {
         node.color = color
     }
     
-    func setupChildren(template: Template, node: SKSpriteNode, parent: SKNode) {
+    private func setupChildren(template: Template, node: SKSpriteNode, parent: SKNode) {
         guard let children = template["children"] as? [Template] else { return }
         
         var parentNode = node
@@ -146,20 +160,6 @@ class TemplateScene: SKScene {
         for child in children {
             build(template: child, parent: parentNode)
         }
-    }
-    
-    func build(template: Template, parent: SKNode) {
-        let node = SKSpriteNode()
-        
-        setupSize(template: template, node: node, parent: parent)
-        setupAnchor(template: template, node: node)
-        setupPosition(template: template, node: node, parent: parent)
-        setupBackground(template: template, node: node)
-        setupMedia(template: template, node: node, parent: parent)
-        
-        parent.addChild(node)
-        
-        setupChildren(template: template, node: node, parent: parent)
     }
     
 }
