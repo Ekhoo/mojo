@@ -19,21 +19,21 @@ class TemplateRepository {
         
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
             if error != nil {
-                completion(nil)
+                completion(LocalCache.shared.templates)
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode),
                   let data = data else {
-                completion(nil)
+                completion(LocalCache.shared.templates)
                 return
             }
             
             do {
                 guard let json = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [String: [Template]],
                       let templates = json["templates"] else {
-                    completion(nil)
+                    completion(LocalCache.shared.templates)
                     return
                 }
                 
@@ -52,9 +52,13 @@ class TemplateRepository {
                     filteredTemplates.append(newTemplate)
                 }
                 
-                completion(filteredTemplates + filteredTemplates + filteredTemplates + filteredTemplates)
+                let result = filteredTemplates + filteredTemplates + filteredTemplates + filteredTemplates
+                
+                LocalCache.shared.templates = result
+                
+                completion(result)
             } catch {
-                completion(nil)
+                completion(LocalCache.shared.templates)
             }
         }
         

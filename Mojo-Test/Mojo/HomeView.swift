@@ -41,7 +41,7 @@ struct HomeView: View {
                         .padding(.top, viewModel.spacing)
                     }
                 } else {
-                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.black))
                 }
             }
         }
