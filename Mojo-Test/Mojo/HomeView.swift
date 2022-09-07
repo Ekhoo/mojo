@@ -14,7 +14,7 @@ struct HomeView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .center) {
-                Color.black
+                Color.white
                 
                 if let templates = viewModel.templates {
                     ScrollView {

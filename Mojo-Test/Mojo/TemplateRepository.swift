@@ -37,7 +37,22 @@ class TemplateRepository {
                     return
                 }
                 
-                completion(templates)
+                // Remove 'data' node in order to handle parent and children the same way
+                var filteredTemplates = [Template]()
+                for item in templates {
+                    var newTemplate = Template()
+                    newTemplate["name"] = item["name"]
+                    
+                    if let payload = item["data"] as? Template {
+                        for (key, value) in payload {
+                            newTemplate[key] = value
+                        }
+                    }
+                    
+                    filteredTemplates.append(newTemplate)
+                }
+                
+                completion(filteredTemplates)
             } catch {
                 completion(nil)
             }
