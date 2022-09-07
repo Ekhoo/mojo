@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BE69AE0128C8AD910067BB1E /* Color+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE69AE0028C8AD910067BB1E /* Color+Additions.swift */; };
+		BE69AE0328C8E8880067BB1E /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE69AE0228C8E8880067BB1E /* DetailsView.swift */; };
 		BEF0288328C2451700B8E713 /* MojoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF0288228C2451700B8E713 /* MojoApp.swift */; };
 		BEF0288528C2451700B8E713 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF0288428C2451700B8E713 /* HomeView.swift */; };
 		BEF0288728C2451900B8E713 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEF0288628C2451900B8E713 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		BE69AE0028C8AD910067BB1E /* Color+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Additions.swift"; sourceTree = "<group>"; };
+		BE69AE0228C8E8880067BB1E /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		BEF0287F28C2451700B8E713 /* Mojo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mojo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEF0288228C2451700B8E713 /* MojoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MojoApp.swift; sourceTree = "<group>"; };
 		BEF0288428C2451700B8E713 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				BEF0288628C2451900B8E713 /* Assets.xcassets */,
 				BEF0288828C2451900B8E713 /* Preview Content */,
 				BE69AE0028C8AD910067BB1E /* Color+Additions.swift */,
+				BE69AE0228C8E8880067BB1E /* DetailsView.swift */,
 			);
 			path = Mojo;
 			sourceTree = "<group>";
@@ -157,6 +160,7 @@
 				BEF028A028C860F200B8E713 /* TemplateView.swift in Sources */,
 				BEF028A228C8610200B8E713 /* TemplateScene.swift in Sources */,
 				BEF0288328C2451700B8E713 /* MojoApp.swift in Sources */,
+				BE69AE0328C8E8880067BB1E /* DetailsView.swift in Sources */,
 				BEF0289E28C2798100B8E713 /* HomeViewModel.swift in Sources */,
 				BEF028A428C864F400B8E713 /* TemplateRepository.swift in Sources */,
 			);
