@@ -13,9 +13,7 @@ class TemplateScene: SKScene {
     init(template: Template, size: CGSize) {
         super.init(size: size)
         
-        self.anchorPoint = CGPoint.zero
-        self.backgroundColor = SKColor.red
-        build(template: template, parent: self, size: size)
+        build(template: template, parent: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -32,14 +30,26 @@ class TemplateScene: SKScene {
         let texture = SKTexture(image: image)
         let sprite = SKSpriteNode(texture: texture, size: node.frame.size)
         sprite.anchorPoint = CGPoint.zero
-        
-        sprite.anchorPoint = CGPoint.zero
         sprite.position = CGPoint.zero
+        
+        if contentMode == "fit" {
+            let imageRatio = texture.size().height / texture.size().width
+            var w = node.frame.width
+            
+            if texture.size().height > texture.size().width {
+                w = node.frame.height * imageRatio
+            }
+            
+            sprite.size = CGSize(width: w, height: w * imageRatio)
+            sprite.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            sprite.position = CGPoint(x: node.frame.midX, y: node.frame.midY)
+        }
+        
         
         node.addChild(sprite)
     }
     
-    func setupSize(template: Template, node: SKSpriteNode, size: CGSize) {
+    func setupSize(template: Template, node: SKSpriteNode, parent: SKNode) {
         var wFactor = 1.0
         var hFactor = 1.0
         
@@ -50,7 +60,7 @@ class TemplateScene: SKScene {
             hFactor = factor
         }
         
-        node.size = CGSize(width: size.width * wFactor, height: size.height * hFactor)
+        node.size = CGSize(width: parent.frame.size.width * wFactor, height: parent.frame.size.height * hFactor)
     }
     
     func setupAnchor(template: Template, node: SKSpriteNode) {
@@ -60,7 +70,7 @@ class TemplateScene: SKScene {
         if let anchor = template["anchor_x"] as? String {
             xAnchor = anchor
         }
-
+        
         if let anchor = template["anchor_y"] as? String {
             yAnchor = anchor
         }
@@ -73,7 +83,7 @@ class TemplateScene: SKScene {
         } else if xAnchor == "right" {
             xAnchorValue = 1
         }
-
+        
         if yAnchor == "center" {
             yAnchorValue = 0.5
         } else if yAnchor == "top" {
@@ -110,19 +120,14 @@ class TemplateScene: SKScene {
         node.color = color
     }
     
-    func build(template: Template, parent: SKNode, size: CGSize) {
-        let node = SKSpriteNode()
+    func setupChildren(template: Template, node: SKSpriteNode, parent: SKNode) {
+        guard let children = template["children"] as? [Template] else { return }
         
-        setupSize(template: template, node: node, size: size)
-        setupAnchor(template: template, node: node)
-        setupPosition(template: template, node: node, parent: parent)
-        setupBackground(template: template, node: node)
-        setupMedia(template: template, node: node, parent: parent)
+        var parentNode = node
+        let padding = template["padding"] as? Double ?? 0.0
         
-        parent.addChild(node)
-        
-        if let children = template["children"] as? [Template] {
-            let padding = template["padding"] as? Double ?? 0.0
+        // Childs node is usefull only if padding is positive
+        if padding != 0.0 {
             let xPadding = padding * size.width
             let yPadding = padding * size.height
             
@@ -135,10 +140,26 @@ class TemplateScene: SKScene {
             
             parent.addChild(childsNode)
             
-            for child in children {
-                build(template: child, parent: childsNode, size: scaledSize)
-            }
+            parentNode = childsNode
         }
+        
+        for child in children {
+            build(template: child, parent: parentNode)
+        }
+    }
+    
+    func build(template: Template, parent: SKNode) {
+        let node = SKSpriteNode()
+        
+        setupSize(template: template, node: node, parent: parent)
+        setupAnchor(template: template, node: node)
+        setupPosition(template: template, node: node, parent: parent)
+        setupBackground(template: template, node: node)
+        setupMedia(template: template, node: node, parent: parent)
+        
+        parent.addChild(node)
+        
+        setupChildren(template: template, node: node, parent: parent)
     }
     
 }

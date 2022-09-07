@@ -52,7 +52,7 @@ class TemplateRepository {
                     filteredTemplates.append(newTemplate)
                 }
                 
-                completion(filteredTemplates)
+                completion(filteredTemplates + filteredTemplates + filteredTemplates + filteredTemplates)
             } catch {
                 completion(nil)
             }

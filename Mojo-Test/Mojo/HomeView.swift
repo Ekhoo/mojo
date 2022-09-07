@@ -16,16 +16,21 @@ struct HomeView: View {
             ZStack(alignment: .center) {
                 Color.white
                 
+                let itemWidth =  (geometry.size.width - (Double(viewModel.itemsPerLine) * viewModel.spacing)) / Double(viewModel.itemsPerLine)
+                let itemHeight = itemWidth * 2
+                
                 if let templates = viewModel.templates {
                     ScrollView {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: viewModel.itemSize.width, maximum: viewModel.itemSize.height))], spacing: 16) {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: itemWidth, maximum: itemWidth))], spacing: viewModel.spacing) {
                             ForEach((0..<templates.count), id: \.self) { item in
                                 let template = templates[item]
                                 
-                                TemplateView(template: template, size: viewModel.itemSize)
-                                    .frame(width: viewModel.itemSize.width, height: viewModel.itemSize.height)
+                                TemplateView(template: template, size: CGSize(width: itemWidth, height: itemHeight))
+                                    .frame(width: itemWidth, height: itemHeight)
+                                    .cornerRadius(10)
                             }
                         }
+                        .padding(.top, viewModel.spacing)
                     }
                 } else {
                     ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
