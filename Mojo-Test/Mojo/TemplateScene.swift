@@ -150,17 +150,17 @@ class TemplateScene: SKScene {
         
         // Childs node is usefull only if padding is positive
         if padding != 0.0 {
-            let xPadding = padding * size.width
-            let yPadding = padding * size.height
-            
-            let scaledSize = CGSize(width: size.width - 2*xPadding, height: size.height - 2*yPadding)
+            let xPadding = padding * node.frame.size.width
+            let yPadding = padding * node.frame.size.height
+            let scaledSize = CGSize(width: node.frame.size.width - 2*xPadding, height: node.frame.size.height - 2*yPadding)
+            let x = node.anchorPoint.x.isZero ? xPadding : -(node.anchorPoint.x * scaledSize.width)
+            let y = node.anchorPoint.y.isZero ? yPadding : -(node.anchorPoint.y * scaledSize.height)
             
             let childsNode = SKSpriteNode()
             childsNode.size = scaledSize
-            childsNode.anchorPoint = CGPoint.zero
-            childsNode.position = CGPoint(x: xPadding, y: yPadding)
+            childsNode.position = CGPoint(x: x, y: y)
             
-            parent.addChild(childsNode)
+            node.addChild(childsNode)
             
             parentNode = childsNode
         }
