@@ -49,16 +49,24 @@ class TemplateScene: SKScene {
         if contentMode == "fit" {
             let imageRatio = texture.size().height / texture.size().width
             var w = node.frame.width
+            var h = w * imageRatio
             
             if texture.size().height > texture.size().width {
                 w = node.frame.height * imageRatio
+                
+                if w > node.frame.width {
+                    w = node.frame.width
+                    h = w * imageRatio
+                }
+            } else if h > node.frame.height {
+                h = node.frame.height
+                w = h / imageRatio
             }
             
-            sprite.size = CGSize(width: w, height: w * imageRatio)
+            sprite.size = CGSize(width: w, height: h)
             sprite.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             sprite.position = CGPoint(x: node.frame.midX, y: node.frame.midY)
         }
-        
         
         node.addChild(sprite)
     }
